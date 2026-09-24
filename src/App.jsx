@@ -1201,7 +1201,8 @@ function App() {
 
     try {
       // 1) Backend: strip watermark / prepare CAD pixels
-      const response = await fetch('http://localhost:8000/api/trace', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://svg-backend-production-ee80.up.railway.app';
+      const response = await fetch(`${apiUrl}/api/trace`, {
         method: 'POST',
         body: formData,
       });
