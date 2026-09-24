@@ -1201,7 +1201,7 @@ function App() {
 
     try {
       // 1) Backend: strip watermark / prepare CAD pixels
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://svg-backend-production-ee80.up.railway.app';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${apiUrl}/api/trace`, {
         method: 'POST',
         body: formData,
@@ -1305,6 +1305,8 @@ function App() {
         name: file.name,
         backgroundRemoved: !!data.background_removed,
         quality: data.quality || 'as-is',
+        aiUpscale: !!data.ai_upscale,
+        enhanced: !!data.enhanced,
         artworkId: artwork.id,
       });
     } catch (error) {
@@ -2675,7 +2677,9 @@ function App() {
                     </span>
                     {convertStats?.quality && (
                       <span className="px-2.5 py-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[11px] font-semibold rounded-full border border-emerald-100 dark:border-emerald-900 uppercase">
-                        {convertStats.quality}
+                        {convertStats.aiUpscale || convertStats.quality === 'hq'
+                          ? 'AI HQ Upscale'
+                          : convertStats.quality}
                       </span>
                     )}
                   </div>
