@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SVGenius - Vector Innovation in 3D</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#8083ff",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "tertiary-fixed": "#ffddb8",
+                        "tertiary-container": "#ca8100",
+                        "secondary": "#4edea3",
+                        "secondary-container": "#00a572",
+                        "inverse-primary": "#494bd6",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#3e2400",
+                        "surface-dim": "#0b1326",
+                        "outline-variant": "#464554",
+                        "surface": "#0b1326",
+                        "outline": "#908fa0",
+                        "on-primary": "#1000a9",
+                        "on-secondary-fixed": "#002113",
+                        "on-tertiary": "#472a00",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-variant": "#2d3449",
+                        "on-background": "#dae2fd",
+                        "primary": "#c0c1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-tint": "#c0c1ff",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#283044",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary-container": "#00311f",
+                        "on-surface-variant": "#c7c4d7",
+                        "inverse-surface": "#dae2fd",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-container": "#0d0096",
+                        "primary-fixed": "#e1e0ff",
+                        "background": "#0b1326",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-primary-fixed": "#07006c",
+                        "on-secondary": "#003824",
+                        "surface-container-low": "#131b2e",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-highest": "#2d3449",
+                        "error-container": "#93000a",
+                        "surface-bright": "#31394d",
+                        "surface-container": "#171f33",
+                        "on-error": "#690005",
+                        "tertiary": "#ffb95f",
+                        "on-surface": "#dae2fd",
+                        "surface-container-lowest": "#060e20"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0F172A; } /* Level 0 Canvas */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(192, 193, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-sm transition-all duration-300" id="navbar">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tight">SVGenius</div>
+<!-- Desktop Nav -->
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md text-body-md" href="#">Features</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md text-body-md" href="#">Pricing</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md text-body-md" href="#">Docs</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="hidden md:block text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md cursor-pointer" href="#">Help</a>
+<button class="bg-inverse-primary text-white px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-all cursor-pointer active:opacity-80">Sign Up</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-16">
+<!-- 3D Animation Background -->
+<div class="absolute inset-0 z-0">
+<!-- STITCH_THREEJS_START:ANIMATION_12 class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen pointer-events-auto" -->
+<div class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen pointer-events-auto" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_12" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_12');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+container.appendChild(renderer.domElement);
+
+// Hexagonal structure
+const group = new THREE.Group();
+scene.add(group);
+
+const material = new THREE.MeshPhongMaterial({
+    color: 0x6366f1, // Indigo primary
+    emissive: 0x312e81,
+    specular: 0xffffff,
+    shininess: 40,
+    transparent: true,
+    opacity: 0.9,
+    side: THREE.DoubleSide
+});
+
+// Create a wireframe version for depth
+const wireframeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x818cf8,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.3
+});
+
+// Hexagon geometry
+const shape = new THREE.Shape();
+const sides = 6;
+const radius = 2;
+for (let i = 0; i <= sides; i++) {
+    const angle = (i / sides) * Math.PI * 2;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    if (i === 0) shape.moveTo(x, y);
+    else shape.lineTo(x, y);
+}
+
+const extrudeSettings = {
+    steps: 2,
+    depth: 0.5,
+    bevelEnabled: true,
+    bevelThickness: 0.1,
+    bevelSize: 0.1,
+    bevelOffset: 0,
+    bevelSegments: 5
+};
+
+const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+const mesh = new THREE.Mesh(geometry, material);
+const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
+
+group.add(mesh);
+group.add(wireframe);
+
+// Inner "plus" or "node"
+const nodeGeo = new THREE.SphereGeometry(0.3, 16, 16);
+const nodeMat = new THREE.MeshPhongMaterial({ color: 0x4ade80, emissive: 0x166534 }); // Green from logo
+const node = new THREE.Mesh(nodeGeo, nodeMat);
+group.add(node);
+
+// Lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0x6366f1, 1, 100);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+const secondaryLight = new THREE.PointLight(0x4ade80, 0.5, 100);
+secondaryLight.position.set(-5, -5, 5);
+scene.add(secondaryLight);
+
+camera.position.z = 6;
+
+// Mouse tracking
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+
+window.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+});
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    targetX += (mouseX - targetX) * 0.05;
+    targetY += (mouseY - targetY) * 0.05;
+
+    group.rotation.y += 0.005;
+    group.rotation.x = targetY * 0.5;
+    group.rotation.y += targetX * 0.5;
+
+    renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_12 -->
+</div>
+<!-- Gradient Overlay for legibility -->
+<div class="absolute inset-0 z-10 bg-gradient-to-b from-background/40 via-background/20 to-background/90 pointer-events-none"></div>
+<div class="relative z-20 w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop flex flex-col items-start justify-center pt-24 pb-32">
+<div class="max-w-3xl space-y-8 glass-panel p-8 rounded-xl lg:p-12 border-l-4 border-l-primary shadow-[0_20px_40px_rgba(192,193,255,0.05)]">
+<div class="inline-flex items-center gap-2 bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-md text-label-md text-secondary tracking-widest uppercase">Engine V4.2 Live</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-white font-bold leading-tight tracking-tighter text-glow">
+                    Vector Innovation<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">in 3D</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                    Design, publish, and scale your SVG assets with the industry's most advanced creative engine. Built for technical artists who demand absolute control.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-inverse-primary hover:bg-primary-container text-white px-8 py-4 rounded-lg font-body-md text-body-md font-semibold transition-all shadow-[0_0_20px_rgba(73,75,214,0.3)] hover:shadow-[0_0_30px_rgba(128,131,255,0.5)] border border-primary/20 flex items-center justify-center gap-2 group">
+                        Launch Workspace
+                        <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="glass-panel hover:bg-surface-container text-on-surface px-8 py-4 rounded-lg font-body-md text-body-md font-medium transition-all hover:border-white/30 flex items-center justify-center gap-2">
+                        Explore Community
+                        <span class="material-symbols-outlined text-lg">public</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section (Bento Grid) -->
+<section class="relative z-20 py-24 px-margin-mobile md:px-margin-desktop bg-background">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16">
+<h2 class="font-headline-lg text-headline-lg text-white font-bold mb-4">Architectural Precision</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">The capabilities you need to build at scale, engineered into a single, cohesive workflow.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter auto-rows-[minmax(300px,auto)]">
+<!-- Feature 1: Large Span -->
+<div class="md:col-span-8 glass-panel rounded-xl p-8 relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative z-10 flex flex-col h-full">
+<span class="material-symbols-outlined text-primary text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">3d_rotation</span>
+<h3 class="font-headline-md text-headline-md text-white mb-3">Absolute 3D Precision</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-md">Manipulate vector paths in true 3D space. Our proprietary rendering engine ensures zero quality degradation across any dimensional axis.</p>
+<div class="mt-auto grid grid-cols-3 gap-4 border-t border-white/5 pt-6">
+<div>
+<div class="font-label-md text-label-md text-primary mb-1">LATENCY</div>
+<div class="font-headline-md text-headline-md text-white">&lt;2ms</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-primary mb-1">PRECISION</div>
+<div class="font-headline-md text-headline-md text-white">64-bit</div>
+</div>
+<div>
+<div class="font-label-md text-label-md text-primary mb-1">EXPORT</div>
+<div class="font-headline-md text-headline-md text-white">Native</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 2: Small Square -->
+<div class="md:col-span-4 glass-panel rounded-xl p-8 flex flex-col justify-between group hover:border-secondary/50 transition-colors">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">api</span>
+<h3 class="font-headline-md text-headline-md text-white mb-2">Developer First</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Headless API integration out of the box. Connect your CI/CD pipelines directly to your design repository.</p>
+</div>
+<div class="mt-8 bg-surface-dim rounded-lg p-4 font-label-md text-label-md text-primary-fixed font-mono text-sm border border-white/5">
+                        &gt; sys.connect(api_key)<br/>
+<span class="text-secondary">&gt; connection established</span>
+</div>
+</div>
+<!-- Feature 3: Medium Span -->
+<div class="md:col-span-5 glass-panel rounded-xl p-8 group hover:border-tertiary/50 transition-colors overflow-hidden relative">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-tertiary text-4xl mb-4">hub</span>
+<h3 class="font-headline-md text-headline-md text-white mb-2">Community Sharing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Publish assets instantly to the global registry or maintain private enterprise spaces.</p>
+</div>
+<!-- Abstract geometric decor -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 border border-white/10 rounded-full group-hover:scale-110 transition-transform duration-700"></div>
+<div class="absolute -bottom-16 -right-16 w-64 h-64 border border-white/5 rounded-full group-hover:scale-110 transition-transform duration-1000 delay-100"></div>
+</div>
+<!-- Feature 4: Medium Span with Image Placeholder -->
+<div class="md:col-span-7 glass-panel rounded-xl overflow-hidden relative min-h-[300px]">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A highly detailed, ultra-modern user interface dashboard floating in a dark, atmospheric void. The UI features crisp, precise vector graphics, glowing data visualizations in electric indigo and emerald green, and semi-transparent glassmorphism panels. The lighting is dramatic and studio-quality, emphasizing depth and sophisticated materiality within a high-tech corporate aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASyyK6RsYt_d8BBSP4TdMM13TAJjmfXIi6guA7KK7C7uUh-v5Akp6bp9Ji7hEUhitN8tphpxvYcWZDi-gQD-G_h28cEkkKBmnKoRsi9gYbZCdr3pi73poitq6SaOuALtkLKNnYGNb2b5DRmidCQxYwLzD0tcWVxOdDYP6sA2LAU0jQSuHDO2RrzqSKZEBxfhmXvDYjyFrX9I-LBbX-yzkCGXH1I2_UpBS9iBycsDLSWZkf7IQA3xna')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-white">dashboard_customize</span>
+<h3 class="font-headline-md text-headline-md text-white">Adaptive Interfaces</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-lg">UI components that automatically adapt to their 3D context, maintaining legibility and accessibility standards.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-8 px-margin-mobile md:px-margin-desktop bg-transparent border-t border-white/5 mt-12 relative z-20">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">
+                SVGenius
+            </div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors cursor-pointer" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors cursor-pointer" href="#">Terms of Service</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors cursor-pointer" href="#">Security</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors cursor-pointer" href="#">Status</a>
+</div>
+<div class="font-label-md text-label-md text-on-surface-variant">
+                © 2024 SVGenius. All rights reserved.
+            </div>
+</div>
+</footer>
+<script>
+        // Simple scroll effect for navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('bg-surface/80', 'shadow-md');
+                nav.classList.remove('bg-surface/60', 'shadow-sm');
+            } else {
+                nav.classList.add('bg-surface/60', 'shadow-sm');
+                nav.classList.remove('bg-surface/80', 'shadow-md');
+            }
+        });
+    </script>
+</body></html>

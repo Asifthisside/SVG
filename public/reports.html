@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reports - SVGenius</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+
+<style>
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(23, 31, 51, 0.5); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(144, 143, 160, 0.3); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(144, 143, 160, 0.6); 
+        }
+    </style>
+    <link rel="stylesheet" href="/theme.css" />
+    <link rel="stylesheet" href="/global.css" />
+</head>
+<body class="bg-background text-on-background font-body-md h-screen overflow-hidden flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- Side Navigation -->
+<nav class="fixed left-0 top-0 h-full w-[280px] bg-surface-container dark:bg-surface-container bg-surface-container-high border-r border-outline-variant/30 shadow-sm flex flex-col h-full py-margin-desktop z-50">
+<!-- Header / Logo -->
+<a class="px-6 mb-8 flex items-center gap-4 cursor-pointer" href="/">
+<div class="w-12 h-12 rounded-lg bg-surface-bright flex items-center justify-center border border-outline-variant/30 flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="polyline">polyline</span>
+</div>
+<div>
+<h1 class="font-display-lg text-headline-md font-bold text-primary tracking-tight">SVGenius</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Management Console</p>
+</div>
+</a>
+<!-- Primary Action -->
+<div class="px-6 mb-8">
+<!-- Changed href to point to the CAD Sketcher (React App root) -->
+<a class="w-full bg-[#4f46e5] hover:bg-opacity-90 text-white font-label-md text-label-md py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 shadow-[0_0_15px_rgba(79,70,229,0.3)] hover:shadow-[0_0_25px_rgba(79,70,229,0.5)] cursor-pointer" href="/">
+<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
+                CREATE NEW SVG
+            </a>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary/5 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform border-l-4 border-transparent" href="/analytics.html">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform border-l-4 border-transparent" href="/reports.html">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform border-l-4 border-transparent mt-auto" href="/settings.html">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[280px] flex flex-col h-full relative">
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-[280px] h-16 bg-surface-container/60 backdrop-blur-md backdrop-blur-md bg-surface-container/60 backdrop-blur-md backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-margin-desktop w-[calc(100%-280px)] z-40">
+<div class="flex items-center gap-4 w-1/3">
+<!-- Search on left -->
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors" data-icon="search">search</span>
+<input class="w-full bg-surface-container-highest border-b-2 border-transparent focus:border-primary text-on-surface font-label-md text-label-md pl-10 pr-4 py-2 rounded-t-sm outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="Search SVG assets..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-on-surface-variant">
+<button class="hover:text-primary transition-colors active:opacity-80 p-2 rounded-full hover:bg-surface-bright">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:text-primary transition-colors active:opacity-80 p-2 rounded-full hover:bg-surface-bright">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="hover:text-primary transition-colors active:opacity-80 p-2 rounded-full hover:bg-surface-bright">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+</button>
+</div>
+<div class="relative profile-dropdown-container">
+    <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/50 cursor-pointer hover:border-primary transition-colors profile-trigger">
+        <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU2ZSvHr9fYldYm45SIZbNYorTbaGm0JCSJ4Q53tprYfUWIsgVjDB06pr0j4wAahfC9tFveoWuBcm5ziWREFoV4-aQeCDjelKXxisfO1rvW5Wx5sbTOfEOex4ZHsjgsJwol6SABZTLu0YWgekVYV2JEw9XUZg3hFYeS7f4K7RShqDyxLwPCIQDF0s9KleWJ4iGa8f7G219Hfq0xnPmPGN0OAHnE5pHfU6qcrgGcUnkREPma37vNGaM" />
+    </div>
+    <!-- Dropdown Menu -->
+    <div class="profile-menu hidden absolute right-0 mt-2 w-48 bg-surface-container-high rounded-xl border border-outline-variant/30 shadow-lg py-2 z-50 flex flex-col overflow-hidden">
+        <div class="px-4 py-2 border-b border-outline-variant/30 mb-1">
+            <p class="font-body-md text-sm text-on-surface truncate">Admin User</p>
+        </div>
+        <button onclick="toggleTheme()" class="w-full text-left px-4 py-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">light_mode</span> Toggle Theme
+        </button>
+        <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-sm text-error hover:bg-surface-bright transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">logout</span> Logout
+        </button>
+    </div>
+</div>
+</div>
+</header>
+    <!-- Reports Content -->
+    <div class="flex-1 mt-16 p-margin-desktop overflow-y-auto">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <!-- Page Header -->
+            <div class="flex justify-between items-end border-b border-outline-variant/30 pb-4">
+                <div>
+                    <h2 class="font-display-lg text-headline-lg font-bold text-on-surface tracking-tight mb-2">System Reports</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Generate, view, and export compliance and usage reports.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button class="px-4 py-2 rounded bg-surface-bright border border-outline-variant/30 hover:bg-surface-container-highest transition-colors text-on-surface font-label-md flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">filter_alt</span> Filter
+                    </button>
+                    <button class="px-4 py-2 rounded bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-md flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">add</span> New Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="glass-panel rounded-xl overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-surface-container-high/50 border-b border-outline-variant/30">
+                            <th class="px-6 py-4 font-label-md text-on-surface-variant uppercase tracking-wider">Report Name</th>
+                            <th class="px-6 py-4 font-label-md text-on-surface-variant uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-4 font-label-md text-on-surface-variant uppercase tracking-wider">Date Generated</th>
+                            <th class="px-6 py-4 font-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 font-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/30">
+                        <tr class="hover:bg-surface-bright/50 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">description</span>
+                                    <div>
+                                        <p class="font-body-md text-on-surface font-medium">Q3 Usage Analytics</p>
+                                        <p class="font-body-sm text-on-surface-variant text-sm">System-wide usage metrics</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-on-surface-variant font-body-sm">Analytics</td>
+                            <td class="px-6 py-4 text-on-surface-variant font-body-sm">Oct 24, 2023</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/20 font-label-md text-[11px] uppercase">Ready</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-on-surface-variant hover:text-primary transition-colors p-2"><span class="material-symbols-outlined text-[20px]">download</span></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-surface-bright/50 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-tertiary bg-tertiary/10 p-2 rounded-lg">security</span>
+                                    <div>
+                                        <p class="font-body-md text-on-surface font-medium">Monthly Security Audit</p>
+                                        <p class="font-body-sm text-on-surface-variant text-sm">Compliance and access logs</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-on-surface-variant font-body-sm">Compliance</td>
+                            <td class="px-6 py-4 text-on-surface-variant font-body-sm">Oct 22, 2023</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 rounded-full bg-secondary/10 text-secondary border border-secondary/20 font-label-md text-[11px] uppercase">Ready</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-on-surface-variant hover:text-primary transition-colors p-2"><span class="material-symbols-outlined text-[20px]">download</span></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-surface-bright/50 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-outline bg-surface-variant p-2 rounded-lg">pending</span>
+                                    <div>
+                                        <p class="font-body-md text-on-surface font-medium">Annual Financial Summary</p>
+                                        <p class="font-body-sm text-on-surface-variant text-sm">Aggregated billing data</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-on-surface-variant font-body-sm">Financial</td>
+                            <td class="px-6 py-4 text-on-surface-variant font-body-sm">Processing...</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant/50 font-label-md text-[11px] uppercase flex items-center w-fit gap-1"><span class="material-symbols-outlined text-[12px] animate-spin">sync</span> Processing</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-on-surface-variant opacity-50 cursor-not-allowed p-2"><span class="material-symbols-outlined text-[20px]">download</span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </main>
+    <script src="/theme.js"></script>
+    <script>
+        document.title = "Reports - SVGenius";
+        // Setup Active Navigation State
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.textContent.includes('Reports')) {
+                link.className = 'flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary/5 active:scale-95 transition-transform';
+            } else if (link.getAttribute('href') !== '/') {
+                link.className = 'flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform border-l-4 border-transparent';
+                if (link.textContent.includes('Settings')) link.className += ' mt-auto';
+            }
+        });
+    </script>
+</body>
+</html>

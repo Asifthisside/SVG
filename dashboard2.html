@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Activity &amp; Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@600;700&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#171f33",
+                        "secondary-container": "#00a572",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#31394d",
+                        "inverse-primary": "#494bd6",
+                        "primary": "#c0c1ff",
+                        "on-primary-fixed": "#07006c",
+                        "surface-container-low": "#131b2e",
+                        "surface": "#0b1326",
+                        "surface-container-high": "#222a3d",
+                        "surface-container-highest": "#2d3449",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary-container": "#3e2400",
+                        "tertiary": "#ffb95f",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "primary-fixed": "#e1e0ff",
+                        "inverse-surface": "#dae2fd",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#472a00",
+                        "inverse-on-surface": "#283044",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-dim": "#0b1326",
+                        "surface-variant": "#2d3449",
+                        "on-primary-container": "#0d0096",
+                        "on-background": "#dae2fd",
+                        "on-primary": "#1000a9",
+                        "tertiary-container": "#ca8100",
+                        "outline-variant": "#464554",
+                        "outline": "#908fa0",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-lowest": "#060e20",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed": "#002113",
+                        "on-surface": "#dae2fd",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary-container": "#00311f",
+                        "surface-tint": "#c0c1ff",
+                        "primary-container": "#8083ff",
+                        "secondary": "#4edea3",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-secondary": "#003824",
+                        "background": "#0b1326"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "container-padding": "24px",
+                        "margin-mobile": "16px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Geist"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "label-md": ["12px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-hover:hover {
+            border-color: rgba(192, 193, 255, 0.5);
+            box-shadow: 0 0 15px rgba(192, 193, 255, 0.1);
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(11, 19, 38, 0.5); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(199, 196, 215, 0.2); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(199, 196, 215, 0.4); 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-x-hidden flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-[280px] bg-surface-container dark:bg-surface-container bg-surface-container-high border-r border-white/10 shadow-sm z-50 flex-col py-margin-desktop">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
+<img alt="Organization Logo" class="w-full h-full object-cover" data-alt="A sleek, modern geometric logo design representing an enterprise operating system. The logo features sharp edges and a sophisticated palette of deep indigo and bright white, conveying authority and technological advancement in a premium corporate setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiOs6uiJj6d3pNrrYuT3N3ch0fxh4Yw-b8lgDL4nUddVDJUgrjABNZ5RyuAQe-sjxgcrGBrvbFWq4t-WVANHWBCSpxd3xmtcFMc_Lz88LPPklk2gGQGZGbe9A36bYKSHmES1YDHHQ9sga0LPOS3J4SuhASvJj3oLyFqbbXN5Uz4kePIomwKMFeOpZ7M2IvYFojZTud7YjvreN5qoNaSpFlELNnaehrS-XH0A6lxNwdcQklYOJ0pzeZZNRWOnD_l3iy1IuMAJtbF4o"/>
+</div>
+<div>
+<h1 class="font-display-lg text-headline-md font-bold text-primary">SVGenius</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mt-1">Management Console</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-4 space-y-1">
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+<!-- Active (Users) -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary/5 rounded-r-lg hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-body-md text-body-md font-bold">Users</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-[280px] min-h-screen flex flex-col relative">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 md:left-[280px] h-16 bg-surface/60 backdrop-blur-md border-b border-white/10 shadow-sm flex justify-between items-center px-margin-desktop w-full z-40 transition-all duration-300">
+<!-- Mobile Menu Button & Title -->
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-colors active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-display-lg text-headline-md font-bold text-primary hidden md:block">Command Center</span>
+</div>
+<!-- Search (on_left configuration visually, but placed in center/right based on flex) -->
+<div class="flex-1 max-w-md mx-4 hidden md:flex items-center">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-2 pl-10 pr-4 focus:ring-1 focus:ring-primary focus:bg-surface-bright transition-all font-body-sm text-body-sm outline-none" placeholder="Search commands, users, or settings..." type="text"/>
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-2 md:gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors active:opacity-80 p-2 rounded-full hover:bg-surface-bright">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:opacity-80 p-2 rounded-full hover:bg-surface-bright">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors active:opacity-80 p-2 rounded-full hover:bg-surface-bright">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 border border-white/10 cursor-pointer hover:border-primary/50 transition-colors">
+<img id="dashboard-profile-img" alt="User Profile" class="w-full h-full object-cover" data-alt="A highly professional corporate headshot of a female executive. The lighting is dramatic and moody, employing a dark blue studio background with a subtle rim light that separates her from the background. The aesthetic is extremely polished, serious, and modern, fitting a high-end enterprise environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs--HtOzkfOWSa1ybsBU9s3S6TEov-606ZpSBLE_e2yJWOWvPxZ4wGuTszBjdtgAE99PzIFGnCq9oAsQNUITmAUAR1Ml6UEP_0z_n5A-uCWOR0yh6sWf3v-gaVYh7Go9L0f9VeUDcoUiHvEraaCPYDCdI910o2LhH23jT-CiMsqQHVX_LCyVwqskhWihaXPfwf0m3Ff8o3wuhA-jbmzXA-_SFZylIt4j3QKOLMfdqsU5d7LEiy2TGpIR8w4XH_5GEJurPu1qZlH1o"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 pt-24 px-margin-mobile md:px-margin-desktop pb-margin-desktop">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">User Activity</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Monitor and manage user sessions and system events in real-time.</p>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-surface-container-high border border-white/10 rounded-lg text-on-surface hover:bg-surface-bright transition-all glow-hover font-label-md text-label-md uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-primary text-on-primary-fixed rounded-lg hover:bg-primary-fixed transition-all active:scale-95 font-label-md text-label-md uppercase tracking-wider font-bold">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New User
+                    </button>
+</div>
+</div>
+<!-- Dashboard Widgets (Bento Grid Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-8">
+<!-- KPI 1 -->
+<div class="glass-panel rounded-xl p-6 glow-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Active Users (24h)</span>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="font-display-lg text-display-lg text-on-surface mb-2">1,204</div>
+<div class="flex items-center gap-2">
+<!-- Micro-sparkline simulation -->
+<div class="w-12 h-4 relative flex items-end gap-[2px]">
+<div class="w-1/4 bg-secondary/40 h-1/4 rounded-t-sm"></div>
+<div class="w-1/4 bg-secondary/60 h-1/2 rounded-t-sm"></div>
+<div class="w-1/4 bg-secondary/80 h-3/4 rounded-t-sm"></div>
+<div class="w-1/4 bg-secondary h-full rounded-t-sm"></div>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">+12.5%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant ml-1">vs last week</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="glass-panel rounded-xl p-6 glow-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">System Errors</span>
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="font-display-lg text-display-lg text-on-surface mb-2">23</div>
+<div class="flex items-center gap-2">
+<div class="w-12 h-4 relative flex items-end gap-[2px]">
+<div class="w-1/4 bg-error h-full rounded-t-sm"></div>
+<div class="w-1/4 bg-error/80 h-3/4 rounded-t-sm"></div>
+<div class="w-1/4 bg-error/60 h-1/2 rounded-t-sm"></div>
+<div class="w-1/4 bg-error/40 h-1/4 rounded-t-sm"></div>
+</div>
+<span class="font-body-sm text-body-sm text-error">-4.2%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant ml-1">vs last week</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="glass-panel rounded-xl p-6 glow-hover transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Avg Response Time</span>
+<span class="material-symbols-outlined text-primary">speed</span>
+</div>
+<div class="font-display-lg text-display-lg text-on-surface mb-2">142<span class="text-headline-md ml-1 text-on-surface-variant">ms</span></div>
+<div class="flex items-center gap-2">
+<div class="w-12 h-4 relative flex items-end gap-[2px]">
+<div class="w-1/4 bg-primary/40 h-1/2 rounded-t-sm"></div>
+<div class="w-1/4 bg-primary/60 h-1/2 rounded-t-sm"></div>
+<div class="w-1/4 bg-primary/80 h-[55%] rounded-t-sm"></div>
+<div class="w-1/4 bg-primary h-1/2 rounded-t-sm"></div>
+</div>
+<span class="font-body-sm text-body-sm text-primary">Stable</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+    // Fetch user profile from settings
+    document.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('svgenius-settings');
+        if (saved) {
+            try {
+                const settings = JSON.parse(saved);
+                if (settings.avatar) {
+                    const profileImg = document.getElementById('dashboard-profile-img');
+                    if (profileImg) {
+                        profileImg.src = settings.avatar;
+                    }
+                }
+            } catch(e) {
+                console.error('Error parsing settings for avatar', e);
+            }
+        }
+    });
+</script>
+</body></html>

@@ -1,0 +1,190 @@
+/* 
+  Global Theme Definitions (Light & Dark)
+  Using Material You / SVGenius Tokens
+*/
+
+:root {
+  /* LIGHT MODE VARIABLES */
+  --color-background: #f1f5f9; /* Very light slate for main background */
+  --color-surface: #ffffff; /* Pure white for cards */
+  --color-surface-dim: #e2e8f0;
+  --color-surface-bright: #ffffff;
+  
+  /* Make all containers pure white or very light for a clean modern look */
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #ffffff;
+  --color-surface-container: #ffffff; 
+  --color-surface-container-high: #f8fafc;
+  --color-surface-container-highest: #f1f5f9;
+  
+  --color-surface-variant: #e2e8f0;
+  
+  --color-on-background: #0f172a;
+  --color-on-surface: #1e293b;
+  --color-on-surface-variant: #64748b;
+  
+  --color-outline: #cbd5e1;
+  --color-outline-variant: #e2e8f0;
+  
+  /* Primary */
+  --color-primary: #4f46e5;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #e0e7ff;
+  --color-on-primary-container: #312e81;
+  --color-primary-fixed: #e1e0ff;
+  --color-primary-fixed-dim: #c0c1ff;
+  --color-on-primary-fixed: #07006c;
+  --color-on-primary-fixed-variant: #2f2ebe;
+  --color-surface-tint: #4f46e5;
+  
+  /* Secondary */
+  --color-secondary: #059669;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #d1fae5;
+  --color-on-secondary-container: #064e3b;
+  --color-secondary-fixed: #6ffbbe;
+  --color-secondary-fixed-dim: #4edea3;
+  --color-on-secondary-fixed: #002113;
+  --color-on-secondary-fixed-variant: #005236;
+  
+  /* Tertiary */
+  --color-tertiary: #d97706;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #fef3c7;
+  --color-on-tertiary-container: #78350f;
+  --color-tertiary-fixed: #ffddb8;
+  --color-tertiary-fixed-dim: #ffb95f;
+  --color-on-tertiary-fixed: #2a1700;
+  --color-on-tertiary-fixed-variant: #653e00;
+  
+  /* Error */
+  --color-error: #dc2626;
+  --color-on-error: #ffffff;
+  --color-error-container: #fee2e2;
+  --color-on-error-container: #7f1d1d;
+  
+  /* Inverse */
+  --color-inverse-surface: #1e293b;
+  --color-inverse-on-surface: #f8fafc;
+  --color-inverse-primary: #818cf8;
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+}
+
+html.dark {
+  /* DARK MODE VARIABLES */
+  --color-background: #0b1326;
+  --color-surface: #0b1326;
+  --color-surface-dim: #0b1326;
+  --color-surface-bright: #31394d;
+  
+  --color-surface-container-lowest: #060e20;
+  --color-surface-container-low: #131b2e;
+  --color-surface-container: #171f33;
+  --color-surface-container-high: #222a3d;
+  --color-surface-container-highest: #2d3449;
+  
+  --color-surface-variant: #2d3449;
+  
+  --color-on-background: #dae2fd;
+  --color-on-surface: #dae2fd;
+  --color-on-surface-variant: #c7c4d7;
+  
+  --color-outline: #908fa0;
+  --color-outline-variant: #464554;
+  
+  /* Primary */
+  --color-primary: #4f46e5;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #3730a3;
+  --color-on-primary-container: #e0e7ff;
+  --color-primary-fixed: #e1e0ff;
+  --color-primary-fixed-dim: #c0c1ff;
+  --color-on-primary-fixed: #07006c;
+  --color-on-primary-fixed-variant: #2f2ebe;
+  --color-surface-tint: #4f46e5;
+  
+  /* Secondary */
+  --color-secondary: #059669;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #064e3b;
+  --color-on-secondary-container: #d1fae5;
+  --color-secondary-fixed: #6ffbbe;
+  --color-secondary-fixed-dim: #4edea3;
+  --color-on-secondary-fixed: #002113;
+  --color-on-secondary-fixed-variant: #005236;
+  
+  /* Tertiary */
+  --color-tertiary: #d97706;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #78350f;
+  --color-on-tertiary-container: #fef3c7;
+  --color-tertiary-fixed: #ffddb8;
+  --color-tertiary-fixed-dim: #ffb95f;
+  --color-on-tertiary-fixed: #2a1700;
+  --color-on-tertiary-fixed-variant: #653e00;
+  
+  /* Error */
+  --color-error: #dc2626;
+  --color-on-error: #ffffff;
+  --color-error-container: #7f1d1d;
+  --color-on-error-container: #fee2e2;
+  
+  /* Inverse */
+  --color-inverse-surface: #dae2fd;
+  --color-inverse-on-surface: #283044;
+  --color-inverse-primary: #494bd6;
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Base Body Styles applied from theme variables */
+body {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Global overrides for hardcoded styles */
+.glass-panel {
+    background-color: var(--glass-bg) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+header:not([data-purpose="cad-studio-header"]):not([data-purpose="pro-studio-top-navbar"]) {
+    background-color: var(--glass-bg) !important;
+    border-bottom-color: var(--glass-border) !important;
+}
+
+header[data-purpose="cad-studio-header"] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+/* Override utility classes that force dark mode borders */
+.border-white\\/10, .border-white\\/5 {
+    border-color: var(--glass-border) !important;
+}
+
+.bg-\\[\\#1E293B\\]\\/60 {
+    background-color: var(--color-surface-container) !important;
+}
+
+.bg-surface\\/60, .bg-surface-container\\/60 {
+    background-color: var(--glass-bg) !important;
+}
+
+/* Ensure text inputs and textareas have better light mode contrasts */
+input, textarea, select {
+    color: var(--color-on-surface) !important;
+}
+input::placeholder, textarea::placeholder {
+    color: var(--color-on-surface-variant) !important;
+    opacity: 0.7;
+}

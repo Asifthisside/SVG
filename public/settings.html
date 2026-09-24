@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SVGenius - User Settings</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+
+<!-- Tailwind Config -->
+
+<style>
+        /* Custom scrollbar for deep atmospheric feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-container-highest');
+            border-radius: theme('borderRadius.full');
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+
+        /* Glassmorphism utilities */
+        
+        
+        .input-glow:focus {
+            box-shadow: 0 4px 20px -2px rgba(192, 193, 255, 0.15);
+        }
+    </style>
+    <link rel="stylesheet" href="/theme.css" />
+    <link rel="stylesheet" href="/global.css" />
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex bg-surface-container dark:bg-surface-container font-body-md text-body-md fixed left-0 top-0 w-[280px] h-full bg-surface-container-high border-r border-outline-variant/30 shadow-sm flex-col py-margin-desktop z-50">
+<!-- Header -->
+<div class="px-6 mb-8 flex items-center gap-4 cursor-pointer" onclick="window.location.href='/'">
+<div class="w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-outline-variant/30 shadow-sm flex items-center justify-center bg-surface-bright">
+<span class="material-symbols-outlined text-primary" data-icon="polyline">polyline</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg text-headline-md font-bold text-primary truncate tracking-tight">SVGenius</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mt-1">Management Console</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-2 mt-4 px-3">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform rounded-lg group" href="/dashboard.html">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform rounded-lg group" href="/analytics.html">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">analytics</span>
+<span>Analytics</span>
+</a>
+
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform rounded-lg group" href="/reports.html">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">description</span>
+<span>Reports</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary border-l-4 border-primary bg-primary/5 active:scale-95 transition-transform rounded-r-lg group" href="/settings.html">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 ml-0 md:ml-[280px] flex flex-col min-h-screen relative">
+<!-- TopNavBar -->
+<header class="bg-surface-container/60 backdrop-blur-md backdrop-blur-md font-body-md text-body-md fixed top-0 right-0 left-0 md:left-[280px] h-16 border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-margin-desktop w-full z-40 transition-all duration-300">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-headline-md font-bold text-primary hidden sm:block tracking-tight">Command Center</span>
+</div>
+<div class="flex items-center gap-4 sm:gap-6">
+<!-- Search could go here based on JSON "search_bar": "on_left", but since flex is space-between and no specific search HTML requested in JSON fields, skipping explicit input to focus on trailing icons -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:opacity-80 rounded-full hover:bg-surface-bright/50">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:opacity-80 rounded-full hover:bg-surface-bright/50 hidden sm:block">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:opacity-80 rounded-full hover:bg-surface-bright/50">
+<span class="material-symbols-outlined">apps</span>
+</button>
+</div>
+<div class="relative profile-dropdown-container">
+    <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/50 cursor-pointer hover:border-primary transition-colors profile-trigger">
+        <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU2ZSvHr9fYldYm45SIZbNYorTbaGm0JCSJ4Q53tprYfUWIsgVjDB06pr0j4wAahfC9tFveoWuBcm5ziWREFoV4-aQeCDjelKXxisfO1rvW5Wx5sbTOfEOex4ZHsjgsJwol6SABZTLu0YWgekVYV2JEw9XUZg3hFYeS7f4K7RShqDyxLwPCIQDF0s9KleWJ4iGa8f7G219Hfq0xnPmPGN0OAHnE5pHfU6qcrgGcUnkREPma37vNGaM" />
+    </div>
+    <!-- Dropdown Menu -->
+    <div class="profile-menu hidden absolute right-0 mt-2 w-48 bg-surface-container-high rounded-xl border border-outline-variant/30 shadow-lg py-2 z-50 flex flex-col overflow-hidden">
+        <div class="px-4 py-2 border-b border-outline-variant/30 mb-1">
+            <p class="font-body-md text-sm text-on-surface truncate">Admin User</p>
+        </div>
+        <button onclick="toggleTheme()" class="w-full text-left px-4 py-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">light_mode</span> Toggle Theme
+        </button>
+        <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-sm text-error hover:bg-surface-bright transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">logout</span> Logout
+        </button>
+    </div>
+</div>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<div class="mt-16 p-margin-mobile md:p-margin-desktop w-full max-w-[1200px] mx-auto flex-1 flex flex-col gap-gutter pb-32">
+<!-- Page Header -->
+<div class="flex flex-col gap-2 mb-4">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight">User Settings</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Manage your account preferences, security credentials, and workspace configuration.</p>
+</div>
+<!-- Bento Grid Layout for Settings -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Column (Profile & Security) -->
+<div class="lg:col-span-7 flex flex-col gap-gutter">
+<!-- Profile Settings Card -->
+<section class="glass-panel rounded-xl p-container-padding flex flex-col gap-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary">person</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Profile Settings</h2>
+</div>
+<!-- Avatar Upload -->
+<div class="flex items-center gap-6">
+<div class="w-20 h-20 rounded-full overflow-hidden border-2 border-surface-bright relative group/avatar cursor-pointer shadow-[0_0_15px_rgba(192,193,255,0.1)]">
+<img id="avatar-img" alt="Current Avatar" class="w-full h-full object-cover" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgkC4LmxvUZE3LjoTapnO9OAR3leLHLYhVQTR-jVHT5Oj8FVDJH_gUaGN3AQFlG1CaYXtrwvs-SUquNigWcNDMlJGSBeIe3l_caPtNsalA7lUuV3kfseOWuvPkQf8eVpBqiVu694KiqJz0jfn7ZSjd300JtC8aLHoOqkGkmFNnDWu1n-jDjlkOHKUIaHapy57he5kMNfh-i-w94tBozKJ1tVIAgZM3lSBdIB4kR8atmgONIqIE2llz"/>
+<div class="absolute inset-0 bg-surface-container/60 backdrop-blur-md backdrop-blur-sm flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">upload</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button id="change-avatar-btn" class="px-4 py-2 bg-surface-bright hover:bg-surface-variant text-on-surface font-body-sm text-body-sm rounded-lg border border-outline-variant/30 transition-all active:scale-95 flex items-center gap-2 w-fit">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                                    Change Avatar
+                                </button>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase">JPG, GIF or PNG. Max size of 800K</p>
+</div>
+</div>
+<!-- Form Inputs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline-variant uppercase tracking-wider" for="display-name">Display Name</label>
+<input class="bg-surface-variant/30 border-0 border-b-2 border-outline-variant focus:border-primary text-on-surface font-body-md text-body-md px-3 py-2 w-full transition-colors input-glow focus:ring-0 focus:outline-none placeholder-on-surface-variant/50" id="display-name" type="text" value="Jane Doe"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline-variant uppercase tracking-wider" for="email">Email Address</label>
+<input class="bg-surface-variant/30 border-0 border-b-2 border-outline-variant focus:border-primary text-on-surface font-body-md text-body-md px-3 py-2 w-full transition-colors input-glow focus:ring-0 focus:outline-none placeholder-on-surface-variant/50" id="email" type="email" value="jane.doe@enterprise.os"/>
+</div>
+</div>
+</section>
+<!-- Security Card -->
+<section class="glass-panel rounded-xl p-container-padding flex flex-col gap-6">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-error">shield_lock</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Security</h2>
+</div>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-outline-variant/30">
+<div class="flex flex-col">
+<h3 class="font-body-lg text-body-lg text-on-surface">Password</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Last changed 3 months ago</p>
+</div>
+<button id="change-password-btn" class="px-5 py-2 border border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 text-on-surface font-body-sm text-body-sm rounded-lg transition-all active:scale-95 shadow-sm whitespace-nowrap">
+                                Change Password
+                            </button>
+</div>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div class="flex flex-col">
+<h3 class="font-body-lg text-body-lg text-on-surface">Two-Factor Authentication</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Add an extra layer of security to your account.</p>
+</div>
+<!-- Custom Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input id="tfa-toggle" checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-bright peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary border border-outline-variant/30"></div>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column (Preferences & Notifications) -->
+<div class="lg:col-span-5 flex flex-col gap-gutter">
+<!-- Workspace Preferences -->
+<section class="glass-panel rounded-xl p-container-padding flex flex-col gap-6">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-secondary">tune</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Workspace</h2>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline-variant uppercase tracking-wider">Interface Theme</label>
+<div class="grid grid-cols-3 gap-2">
+<button data-theme="dark" class="theme-btn py-2 px-3 rounded-lg border border-primary bg-primary/10 text-primary font-body-sm text-body-sm flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+                                        Dark
+                                    </button>
+<button data-theme="light" class="theme-btn py-2 px-3 rounded-lg border border-outline-variant/30 bg-surface-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright font-body-sm text-body-sm flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">light_mode</span>
+                                        Light
+                                    </button>
+<button data-theme="system" class="theme-btn py-2 px-3 rounded-lg border border-outline-variant/30 bg-surface-variant/30 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright font-body-sm text-body-sm flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">desktop_windows</span>
+                                        System
+                                    </button>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<label class="font-label-md text-label-md text-outline-variant uppercase tracking-wider" for="export-format">Default Export Format</label>
+<div class="relative">
+<select class="appearance-none bg-surface-variant/30 border-0 border-b-2 border-outline-variant focus:border-primary text-on-surface font-body-md text-body-md px-3 py-2.5 w-full transition-colors focus:ring-0 focus:outline-none cursor-pointer" id="export-format">
+<option class="bg-surface text-on-surface" value="csv">CSV (Comma Separated Values)</option>
+<option class="bg-surface text-on-surface" value="json">JSON (JavaScript Object Notation)</option>
+<option class="bg-surface text-on-surface" value="pdf">PDF (Portable Document Format)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Notifications -->
+<section class="glass-panel rounded-xl p-container-padding flex flex-col gap-6">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-tertiary">notifications_active</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Notifications</h2>
+</div>
+<div class="flex flex-col gap-5">
+<label class="flex items-start gap-4 cursor-pointer group">
+<div class="relative flex items-center justify-center mt-0.5">
+<input id="email-alerts" checked="" class="peer appearance-none w-5 h-5 border-2 border-outline-variant rounded bg-surface-variant/30 checked:bg-primary checked:border-primary transition-all cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-[16px] text-on-primary opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Email Alerts</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Receive daily summary reports and critical alerts via email.</span>
+</div>
+</label>
+<label class="flex items-start gap-4 cursor-pointer group">
+<div class="relative flex items-center justify-center mt-0.5">
+<input id="system-sounds" class="peer appearance-none w-5 h-5 border-2 border-outline-variant rounded bg-surface-variant/30 checked:bg-primary checked:border-primary transition-all cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-[16px] text-on-primary opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">System Sounds</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Play subtle audio cues for incoming messages and task completions.</span>
+</div>
+</label>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Sticky Action Bar at Bottom -->
+<div class="fixed bottom-0 right-0 left-0 md:left-[280px] bg-surface-container-high/80 backdrop-blur-lg border-t border-outline-variant/30 p-4 px-margin-desktop z-40 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+<div class="max-w-[1200px] mx-auto flex justify-end items-center gap-4">
+<button id="cancel-btn" class="px-6 py-2.5 rounded-lg border border-outline-variant/30 text-on-surface hover:bg-surface-bright font-body-md text-body-md transition-all active:scale-95">
+                    Cancel
+                </button>
+<button id="save-btn" class="px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container font-body-md text-body-md font-medium transition-all active:scale-95 shadow-[0_4px_15px_rgba(192,193,255,0.2)]">
+                    Save Changes
+                </button>
+</div>
+</div>
+</main>
+    <script src="/theme.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Hidden file input for avatar
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/png, image/jpeg, image/gif';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    const changeAvatarBtn = document.getElementById('change-avatar-btn');
+    const avatarImg = document.getElementById('avatar-img');
+    const avatarOverlay = document.querySelector('.group\\/avatar'); // the overlay div container
+    
+    const triggerUpload = () => fileInput.click();
+    if(changeAvatarBtn) changeAvatarBtn.addEventListener('click', triggerUpload);
+    if(avatarOverlay) avatarOverlay.addEventListener('click', triggerUpload);
+
+    fileInput.addEventListener('change', (e) => {
+        if(e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if(avatarImg) avatarImg.src = e.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+    // Theme toggles
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Remove active classes
+            themeBtns.forEach(b => {
+                b.classList.remove('border-primary', 'bg-primary/10', 'text-primary');
+                b.classList.add('border-outline-variant/30', 'bg-surface-variant/30', 'text-on-surface-variant');
+            });
+            // Add active classes to clicked
+            const t = e.currentTarget;
+            t.classList.remove('border-outline-variant/30', 'bg-surface-variant/30', 'text-on-surface-variant');
+            t.classList.add('border-primary', 'bg-primary/10', 'text-primary');
+            
+            const theme = t.getAttribute('data-theme');
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+            else if (theme === 'light') document.documentElement.classList.remove('dark');
+            else {
+                // system
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+        });
+    });
+
+    // Change Password
+    const changePwdBtn = document.getElementById('change-password-btn');
+    if(changePwdBtn) {
+        changePwdBtn.addEventListener('click', () => {
+            const current = prompt('Enter current password:');
+            if(current) {
+                const newPwd = prompt('Enter new password:');
+                if(newPwd) {
+                    alert('Password successfully changed!');
+                }
+            }
+        });
+    }
+
+    // Load Settings
+    const loadSettings = () => {
+        const saved = localStorage.getItem('svgenius-settings');
+        if (saved) {
+            try {
+                const s = JSON.parse(saved);
+                if (document.getElementById('display-name')) document.getElementById('display-name').value = s.displayName || 'Jane Doe';
+                if (document.getElementById('email')) document.getElementById('email').value = s.email || 'jane.doe@enterprise.os';
+                if (document.getElementById('tfa-toggle')) document.getElementById('tfa-toggle').checked = s.tfa !== false;
+                if (document.getElementById('export-format')) document.getElementById('export-format').value = s.exportFormat || 'csv';
+                if (document.getElementById('email-alerts')) document.getElementById('email-alerts').checked = s.emailAlerts !== false;
+                if (document.getElementById('system-sounds')) document.getElementById('system-sounds').checked = s.systemSounds === true;
+                if (s.avatar && avatarImg) avatarImg.src = s.avatar;
+            } catch (e) {}
+        }
+    };
+    loadSettings();
+
+    // Save Settings
+    const saveBtn = document.getElementById('save-btn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            const originalText = saveBtn.innerText;
+            saveBtn.innerText = 'Saving...';
+            
+            const settings = {
+                displayName: document.getElementById('display-name') ? document.getElementById('display-name').value : '',
+                email: document.getElementById('email') ? document.getElementById('email').value : '',
+                tfa: document.getElementById('tfa-toggle') ? document.getElementById('tfa-toggle').checked : true,
+                exportFormat: document.getElementById('export-format') ? document.getElementById('export-format').value : 'csv',
+                emailAlerts: document.getElementById('email-alerts') ? document.getElementById('email-alerts').checked : true,
+                systemSounds: document.getElementById('system-sounds') ? document.getElementById('system-sounds').checked : false,
+                avatar: avatarImg ? avatarImg.src : null
+            };
+            
+            localStorage.setItem('svgenius-settings', JSON.stringify(settings));
+            
+            setTimeout(() => {
+                saveBtn.innerText = 'Saved!';
+                setTimeout(() => {
+                    saveBtn.innerText = originalText;
+                }, 2000);
+            }, 600);
+        });
+    }
+
+    // Cancel Settings
+    const cancelBtn = document.getElementById('cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            if(confirm('Discard unsaved changes?')) {
+                loadSettings();
+            }
+        });
+    }
+});
+</script>
+</body></html>

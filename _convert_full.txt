@@ -1,0 +1,180 @@
+const convertImageFile = async (file) => {
+    if (!file) return;
+    const allowed = /\.(png|jpe?g|gif|webp|bmp|tiff?)$/i;
+    if (!allowed.test(file.name) && !(file.type || '').startsWith('image/')) {
+      alert('Unsupported format. Use PNG, JPG, GIF, WebP, BMP, or TIFF.');
+      return;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      alert('File too large (max 20MB).');
+      return;
+    }
+
+    setIsConverting(true);
+    setConvertStats(null);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('mode', traceMode);
+    formData.append('remove_background', removeBg ? 'true' : 'false');
+
+    try {
+      // 1) Backend: clean / remove watermark (svgai remove_background)
+      const response = await fetch('http://localhost:8000/api/trace', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) throw new Error(`Backend error: ${response.statusText}`);
+      const data = await response.json();
+      if (data.error) throw new Error(data.error);
+
+      const cleanedSrc = data.cleaned_image || await fileToDataUrl(file);
+
+      // 2) Bezier vectorize (svgai-style real paths — not raster wrap)
+      let parsed = null;
+      let svgString = null;
+      if (traceMode === 'centerline' && (data.paths || []).length) {
+        svgString = data.svg;
+        parsed = {
+          width: data.width,
+          height: data.height,
+          paths: data.paths,
+          svg: data.svg,
+        };
+      } else {
+        svgString = await imageToSvgPromise(cleanedSrc, SVGAI_TRACE_OPTS);
+        parsed = parseSvgDocument(svgString);
+        if (!parsed?.paths?.length && (data.paths || []).length) {
+          parsed = {
+            width: data.width,
+            height: data.height,
+            paths: data.paths,
+            svg: data.svg,
+          };
+          svgString = data.svg;
+        }
+      }
+      if (!parsed?.paths?.length) {
+        throw new Error('No vector paths produced');
+      }
+
+      const srcW = parsed.width || data.width || 1;
+      const srcH = parsed.height || data.height || 1;
+      const artW = svgRef.current?.clientWidth || 850;
+      const artH = svgRef.current?.clientHeight || 540;
+      const fitScale = Math.min(1, (artW * 0.88) / srcW, (artH * 0.88) / srcH);
+      const width = srcW * fitScale;
+      const height = srcH * fitScale;
+      const pathScale = width / srcW;
+      const centerX = -pan.x / zoom + artW / 2 / zoom;
+      const centerY = -pan.y / zoom + artH / 2 / zoom;
+
+      const layers = parsed.paths.map((p) => ({
+        id: generateId(),
+        d: p.d,
+        nodes: parsePathD(p.d, pathScale),
+        fill: p.fill && p.fill !== 'none' ? p.fill : (p.stroke && p.stroke !== 'none' ? 'none' : '#111111'),
+        stroke: p.stroke || 'none',
+        strokeWidth: p.strokeWidth ?? 0,
+        fillRule: p.fillRule || 'evenodd',
+      })).filter((layer) => (layer.d && layer.d.length > 2) || layer.nodes.length > 0);
+
+      const artwork = {
+        id: generateId(),
+        type: 'tracedArtwork',
+        pos: { x: centerX - width / 2, y: centerY - height / 2 },
+        width,
+        height,
+        sourceWidth: srcW,
+        sourceHeight: srcH,
+        imageSrc: null,
+        layers,
+        svgString: svgString || data.svg || null,
+        fileName: file.name,
+        hasEdits: false,
+        showVectors: true,
+      };
+
+      setElements((prev) => {
+        const next = [...prev, artwork];
+        setHistory((hArr) => {
+          const newHistory = hArr.slice(0, historyIndex + 1);
+          newHistory.push(next);
+          setHistoryIndex(newHistory.length - 1);
+          return newHistory;
+        });
+        return next;
+      });
+      setSelectedId(artwork.id);
+      setArtworkMenuId(null);
+      setEditingNodeId(null);
+      setTool('select');
+      setConvertStats({
+        pathCount: layers.length,
+        width: srcW,
+        height: srcH,
+        name: file.name,
+        backgroundRemoved: !!data.background_removed,
+        quality: 'vector',
+        artworkId: artwork.id,
+      });
+    } catch (error) {
+      console.error('Tracing error:', error);
+      try {
+        const imageSrc = await fileToDataUrl(file);
+        const svgstr = await imageToSvgPromise(imageSrc, SVGAI_TRACE_OPTS);
+        const parsed = parseSvgDocument(svgstr);
+        if (!parsed?.paths?.length) throw error;
+        const srcW = parsed.width || 1;
+        const srcH = parsed.height || 1;
+        const artW = svgRef.current?.clientWidth || 850;
+        const artH = svgRef.current?.clientHeight || 540;
+        const fitScale = Math.min(1, (artW * 0.88) / srcW, (artH * 0.88) / srcH);
+        const width = srcW * fitScale;
+        const height = srcH * fitScale;
+        const pathScale = width / srcW;
+        const centerX = -pan.x / zoom + artW / 2 / zoom;
+        const centerY = -pan.y / zoom + artH / 2 / zoom;
+        const layers = parsed.paths.map((p) => ({
+          id: generateId(),
+          d: p.d,
+          nodes: parsePathD(p.d, pathScale),
+          fill: p.fill || '#111111',
+          stroke: p.stroke || 'none',
+          strokeWidth: p.strokeWidth ?? 0,
+          fillRule: p.fillRule || 'evenodd',
+        })).filter((l) => l.d);
+        const artwork = {
+          id: generateId(),
+          type: 'tracedArtwork',
+          pos: { x: centerX - width / 2, y: centerY - height / 2 },
+          width,
+          height,
+          sourceWidth: srcW,
+          sourceHeight: srcH,
+          imageSrc: null,
+          layers,
+          svgString: svgstr,
+          fileName: file.name,
+          hasEdits: false,
+          showVectors: true,
+        };
+        setElements((prev) => [...prev, artwork]);
+        setSelectedId(artwork.id);
+        setTool('select');
+        setConvertStats({
+          pathCount: layers.length,
+          width: srcW,
+          height: srcH,
+          name: file.name,
+          backgroundRemoved: false,
+          quality: 'vector',
+          artworkId: artwork.id,
+        });
+      } catch {
+        alert('Error converting image to SVG: ' + error.message);
+      }
+    } finally {
+      setIsConverting(false);
+    }
+  };

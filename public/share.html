@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SVGenius - Share SVG</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="/theme.css" />
+    <link rel="stylesheet" href="/global.css" />
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased overflow-hidden flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-[280px] bg-surface-container dark:bg-surface-container bg-surface-container-high border-r border-outline-variant/30 shadow-sm flex-col py-margin-desktop z-50">
+<div class="px-gutter mb-12 flex items-center gap-4">
+<a class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center border border-primary/30 cursor-pointer" href="/">
+<span class="material-symbols-outlined text-primary" data-icon="corporate_fare">corporate_fare</span>
+</a>
+<div>
+<h1 class="font-display-lg text-headline-md font-bold text-primary">SVGenius</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Management Console</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform" href="/dashboard.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform" href="/analytics.html">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Analytics</span>
+</a>
+</li>
+
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform" href="/reports.html">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Reports</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-colors duration-200 active:scale-95 transition-transform" href="/settings.html">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto px-4">
+<div class="relative profile-dropdown-container">
+<div class="p-4 rounded-xl bg-surface-container-high border border-outline-variant/30 flex items-center gap-3 cursor-pointer hover:bg-surface-bright transition-colors profile-trigger">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvHqEoYpVQDRO6Aw-9dlIerSuoQ49_IhRiWSJcJmKGWiQ_WXMhmMg5iRAHHHMW7PEZVYFCNXUpT9oxLEtL9bf71odQsyE-ZI9mWlyay9VxmCUPR6IanoXYdpa2eCxTf-Hzkg6XYyCPXu_W1XqPybjwjam6fOX2aVU3Th-mvJy7HuoUGJvvonAljA0DnCyQIOn8WMTIFRy_IdgQWDhvIE-5Yq0xxVExCzFRWRFN-Kgg2CqH11u1fOhI"/>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface truncate">Admin User</p>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase truncate">System Admin</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<!-- Dropdown Menu -->
+<div class="profile-menu hidden absolute bottom-full left-0 mb-2 w-full bg-surface-container-highest rounded-xl border border-outline-variant/30 shadow-lg py-2 z-50 flex flex-col overflow-hidden">
+    <button onclick="toggleTheme()" class="w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-bright transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">light_mode</span> Toggle Theme
+    </button>
+    <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-sm text-error hover:bg-surface-bright transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">logout</span> Logout
+    </button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] h-screen overflow-y-auto flex flex-col relative bg-background">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 md:left-[280px] left-0 h-16 bg-surface-container/60 backdrop-blur-md backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-margin-desktop w-full z-40">
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-64 h-10 bg-surface-container-high border-b-2 border-transparent focus:border-primary rounded-t-lg pl-10 pr-4 font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant transition-colors focus:outline-none focus:ring-0" placeholder="Search resources..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:text-primary transition-colors active:opacity-80">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="hover:text-primary transition-colors active:opacity-80">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="pt-[104px] px-margin-mobile md:px-margin-desktop pb-margin-desktop max-w-[1600px] mx-auto w-full flex-1 flex flex-col">
+<!-- Breadcrumbs / Header -->
+<div class="mb-gutter">
+<nav aria-label="Breadcrumb" class="flex text-on-surface-variant font-label-md text-label-md uppercase mb-2">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center hover:text-primary transition-colors" href="#">
+                        Assets
+                      </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-sm mx-1" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="/dashboard.html">Vector Library</a>
+</div>
+</li>
+<li aria-current="page">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-sm mx-1" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">Share Asset</span>
+</div>
+</li>
+</ol>
+</nav>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Asset Distribution</h2>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter flex-1">
+<!-- Left Column: Preview -->
+<div class="xl:col-span-5 flex flex-col gap-gutter">
+<div class="bg-surface-container/60 backdrop-blur-md border border-outline-variant/30 rounded-xl overflow-hidden flex flex-col h-full min-h-[400px]">
+<div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-high/50">
+<h3 class="font-headline-md text-body-lg font-bold text-on-surface">Preview</h3>
+<div class="flex gap-2">
+<button class="p-1.5 rounded bg-surface-bright/50 text-on-surface-variant hover:text-primary hover:bg-surface-bright transition-all" title="Toggle Dark Background">
+<span class="material-symbols-outlined text-[18px]" data-icon="dark_mode">dark_mode</span>
+</button>
+<button class="p-1.5 rounded bg-surface-bright/50 text-on-surface-variant hover:text-primary hover:bg-surface-bright transition-all" title="Toggle Light Background">
+<span class="material-symbols-outlined text-[18px]" data-icon="light_mode">light_mode</span>
+</button>
+</div>
+</div>
+<!-- SVG Preview Area -->
+<div class="flex-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIyIiBjeT0iMiIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPgo8L3N2Zz4=')] bg-repeat flex items-center justify-center p-8 relative group">
+<!-- Placeholder SVG Graphic -->
+<div id="preview-container" class="w-64 h-64 relative z-10 transition-transform duration-500 group-hover:scale-105 cursor-pointer" onclick="window.location.href='/dashboard.html'" title="Click to select a different SVG from the library">
+<svg class="w-full h-full drop-shadow-[0_0_30px_rgba(192,193,255,0.2)]" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="grad1" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#c0c1ff;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#494bd6;stop-opacity:1"></stop>
+</lineargradient>
+<filter id="glow">
+<fegaussianblur result="coloredBlur" stddeviation="2.5"></fegaussianblur>
+<femerge>
+<femergenode in="coloredBlur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="url(#grad1)" fill-opacity="0.2" filter="url(#glow)" stroke="url(#grad1)" stroke-width="2"></path>
+<circle cx="50" cy="50" fill="none" opacity="0.8" r="20" stroke="#4edea3" stroke-width="2"></circle>
+<path d="M35 50 L65 50 M50 35 L50 65" opacity="0.6" stroke="#dae2fd" stroke-width="1.5"></path>
+</svg>
+</div>
+<!-- Overlay Controls -->
+<div class="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="w-8 h-8 rounded-full bg-surface-container-high/90 border border-outline-variant/30 flex items-center justify-center text-on-surface hover:bg-primary/20 hover:text-primary transition-colors shadow-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="zoom_in">zoom_in</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-high/90 border border-outline-variant/30 flex items-center justify-center text-on-surface hover:bg-primary/20 hover:text-primary transition-colors shadow-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="zoom_out">zoom_out</span>
+</button>
+</div>
+</div>
+<!-- Technical Specs -->
+<div class="bg-surface-container-low p-4 border-t border-outline-variant/30 grid grid-cols-3 gap-4">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Dimensions</p>
+<p class="font-body-sm text-body-sm text-on-surface font-mono">800x800 px</p>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">File Size</p>
+<p class="font-body-sm text-body-sm text-on-surface font-mono">12.4 KB</p>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase mb-1">Color Space</p>
+<p class="font-body-sm text-body-sm text-on-surface font-mono">RGB</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Form & Actions -->
+<div class="xl:col-span-7 flex flex-col gap-gutter">
+<div class="bg-surface-container/60 backdrop-blur-md border border-outline-variant/30 rounded-xl overflow-hidden flex-1">
+<div class="px-8 py-6 border-b border-outline-variant/30 bg-surface-container-high/50 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">Asset Metadata</h3>
+<div class="px-2 py-1 bg-secondary/10 border border-secondary/20 rounded-full flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-label-md text-[10px] text-secondary uppercase tracking-widest">Valid Format</span>
+</div>
+</div>
+<div class="p-8 space-y-8">
+<!-- Input: Name -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-2" for="svg-name">Asset Name</label>
+<input class="w-full h-12 bg-surface-container-low border-b-2 border-transparent focus:border-primary rounded-t-lg px-4 font-body-md text-body-md text-on-surface transition-colors focus:outline-none focus:ring-0 placeholder:text-on-surface-variant/50" id="svg-name" type="text" value="Hexagonal Node Structure"/>
+</div>
+<!-- Input: Description -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-2" for="svg-desc">Description</label>
+<textarea class="w-full bg-surface-container-low border-b-2 border-transparent focus:border-primary rounded-t-lg p-4 font-body-md text-body-md text-on-surface transition-colors focus:outline-none focus:ring-0 resize-none" id="svg-desc" rows="3">Core architectural diagram icon used in system topology maps. Contains primary and secondary brand gradients.</textarea>
+</div>
+<!-- Input: Tags -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-2">Metadata Tags</label>
+<div class="w-full min-h-[48px] bg-surface-container-low border-b-2 border-transparent focus-within:border-primary rounded-t-lg p-2 flex flex-wrap gap-2 transition-colors">
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-bright rounded text-sm text-on-surface border border-outline-variant/30">
+                                        architecture
+                                        <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-bright rounded text-sm text-on-surface border border-outline-variant/30">
+                                        diagram
+                                        <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-surface-bright rounded text-sm text-on-surface border border-outline-variant/30">
+                                        iconography
+                                        <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button>
+</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 p-1 text-on-surface placeholder:text-on-surface-variant/50 min-w-[100px] text-sm font-body-sm" placeholder="Add tag..." type="text"/>
+</div>
+</div>
+<!-- Visibility Toggle -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-4">Access Level</label>
+<div class="grid grid-cols-2 gap-4">
+<label class="cursor-pointer relative">
+<input checked="" class="peer sr-only" name="visibility" type="radio"/>
+<div class="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low peer-checked:border-primary peer-checked:bg-primary/5 transition-all flex items-start gap-4 hover:bg-surface-bright/50">
+<span class="material-symbols-outlined text-primary mt-0.5" data-icon="public">public</span>
+<div>
+<div class="font-body-md text-body-md font-semibold text-on-surface mb-1">Public to Organization</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Anyone in SVGenius can view and use this asset.</div>
+</div>
+<span class="material-symbols-outlined absolute top-4 right-4 text-primary opacity-0 peer-checked:opacity-100 transition-opacity" data-icon="check_circle" data-weight="fill">check_circle</span>
+</div>
+</label>
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="visibility" type="radio"/>
+<div class="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-low peer-checked:border-primary peer-checked:bg-primary/5 transition-all flex items-start gap-4 hover:bg-surface-bright/50">
+<span class="material-symbols-outlined text-on-surface-variant peer-checked:text-primary mt-0.5" data-icon="lock">lock</span>
+<div>
+<div class="font-body-md text-body-md font-semibold text-on-surface mb-1">Private Restricted</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Only specific teams or users can access this asset.</div>
+</div>
+<span class="material-symbols-outlined absolute top-4 right-4 text-primary opacity-0 peer-checked:opacity-100 transition-opacity" data-icon="check_circle" data-weight="fill">check_circle</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Share Modalities (Bento style row) -->
+<div class="pt-4 border-t border-outline-variant/30">
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-4">Quick Share Options</label>
+<div class="flex gap-4">
+<button class="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant/30 hover:border-primary/50 hover:bg-surface-bright transition-all text-on-surface font-body-sm text-body-sm">
+<span id="btn-copy-link" class="material-symbols-outlined text-primary text-[20px]" data-icon="link">link</span>
+                                         Copy Link
+                                     </button>
+<button class="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant/30 hover:border-primary/50 hover:bg-surface-bright transition-all text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="mail">mail</span>
+                                         Email Team
+                                     </button>
+<button class="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-surface-container-high border border-outline-variant/30 hover:border-primary/50 hover:bg-surface-bright transition-all text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]" data-icon="chat">chat</span>
+                                         Send to Slack
+                                     </button>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="px-8 py-5 border-t border-outline-variant/30 bg-surface-container-high/30 flex justify-end gap-4 mt-auto">
+<button class="px-6 py-2.5 rounded-lg border border-outline-variant/30 bg-transparent hover:bg-surface-bright hover:border-outline-variant/50 text-on-surface transition-all font-label-md text-label-md uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                                Download SVG
+                            </button>
+<button id="publish-btn" class="px-8 py-2.5 rounded-lg bg-inverse-primary hover:bg-primary-container text-white transition-all font-label-md text-label-md uppercase tracking-wider shadow-[0_0_15px_rgba(73,75,214,0.3)] flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+                                Publish &amp; Share
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+    <script src="/theme.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Load target SVG if it exists
+        const loadTarget = localStorage.getItem('svgenius-load-target');
+        let currentSvg = '';
+        let currentItem = null;
+        
+        try {
+            if (loadTarget) {
+                if (loadTarget.trim().startsWith('{')) {
+                    currentItem = JSON.parse(loadTarget);
+                    currentSvg = currentItem.svg;
+                } else {
+                    currentSvg = loadTarget;
+                }
+            }
+        } catch (e) {
+            currentSvg = loadTarget; // fallback to raw string
+        }
+        
+        if (!currentSvg) {
+            currentSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full text-primary"><style>.mock-anim { animation: mock-bounce 1s infinite alternate ease-in-out; } @keyframes mock-bounce { 0% { transform: translateY(-3px); } 100% { transform: translateY(3px); } }</style><circle class="mock-anim" cx="12" cy="12" r="10"></circle><path class="mock-anim" d="M12 8v4l3 3"></path></svg>`;
+        }
+
+        // 2. Inject SVG into Preview Container
+        const container = document.getElementById('preview-container');
+        if (container) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = currentSvg;
+            const svgEl = tempDiv.querySelector('svg');
+            if (svgEl) {
+                svgEl.setAttribute('class', 'w-full h-full drop-shadow-[0_0_30px_rgba(192,193,255,0.2)] text-primary');
+                container.innerHTML = tempDiv.innerHTML;
+            }
+        }
+        
+        // 3. Populate form details if we have currentItem
+        if (currentItem) {
+            const nameInput = document.getElementById('svg-name');
+            const descInput = document.getElementById('svg-desc');
+            if (nameInput) nameInput.value = currentItem.title;
+            if (descInput) descInput.value = `A high quality SVG asset: ${currentItem.title}. Automatically generated description.`;
+            
+            // Populate Tags
+            const tagContainer = document.querySelector('.min-h-\\[48px\\]') || document.querySelector('.min-h-[48px]');
+            if (tagContainer && currentItem.tags && Array.isArray(currentItem.tags)) {
+                const existingTags = tagContainer.querySelectorAll('span.inline-flex');
+                existingTags.forEach(t => t.remove());
+                
+                const inputEl = tagContainer.querySelector('input');
+                currentItem.tags.forEach(tag => {
+                    const tagSpan = document.createElement('span');
+                    tagSpan.className = 'inline-flex items-center gap-1 px-3 py-1 bg-surface-bright rounded text-sm text-on-surface border border-outline-variant/30';
+                    tagSpan.innerHTML = `${tag} <button type="button" class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]" data-icon="close">close</span></button>`;
+                    tagContainer.insertBefore(tagSpan, inputEl);
+                    
+                    tagSpan.querySelector('button').addEventListener('click', (e) => {
+                        e.target.closest('span').remove();
+                    });
+                });
+            }
+        }
+    
+        // 4. Publish Logic
+        const publishBtn = document.getElementById('publish-btn');
+        if (publishBtn) {
+            publishBtn.addEventListener('click', async () => {
+                
+                const name = document.getElementById('svg-name').value;
+                const desc = document.getElementById('svg-desc').value;
+                
+                const tagElements = document.querySelectorAll('.min-h-\[48px\] span.inline-flex, .min-h-[48px] span.inline-flex');
+                const tagsArray = Array.from(tagElements).map(el => el.textContent.replace('close', '').trim());
+
+                const payload = {
+                    title: name,
+                    author: 'Community User',
+                    svgContent: currentSvg,
+                    isPublic: true,
+                    tags: tagsArray
+                };
+                
+                publishBtn.textContent = 'Publishing...';
+                publishBtn.disabled = true;
+
+                try {
+                    const res = await fetch('http://localhost:5000/api/svgs', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (res.ok) {
+                        alert('Asset Published Successfully!');
+                        window.location.href = '/dashboard.html';
+                    } else {
+                        alert('Failed to publish asset');
+                        publishBtn.textContent = 'Publish & Share';
+                        publishBtn.disabled = false;
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Error connecting to server. Is the backend running?');
+                    publishBtn.textContent = 'Publish & Share';
+                    publishBtn.disabled = false;
+                }
+            });
+        }
+
+        // 5. Wire up all other UI buttons
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            const text = btn.textContent.trim();
+            if (text.includes('Copy Link')) {
+                btn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(window.location.href);
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = `<span class="material-symbols-outlined text-primary text-[20px]">check</span> Copied!`;
+                    setTimeout(() => btn.innerHTML = originalHTML, 2000);
+                });
+            }
+            if (text.includes('Email Team')) {
+                btn.addEventListener('click', () => {
+                    const name = document.getElementById('svg-name').value;
+                    window.location.href = `mailto:?subject=Check out this SVG: ${name}&body=Hey team, check out the new SVG I published on SVGenius!`;
+                });
+            }
+            if (text.includes('Send to Slack')) {
+                btn.addEventListener('click', () => {
+                    alert('Successfully sent a notification to the #design-assets Slack channel!');
+                });
+            }
+            if (text.includes('Download SVG')) {
+                btn.addEventListener('click', () => {
+                    // Use the currentSvg, not the mock SVG
+                    const blob = new Blob([currentSvg], {type: 'image/svg+xml'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    const name = document.getElementById('svg-name').value || 'asset';
+                    a.download = `${name.replace(/\s+/g, '-').toLowerCase()}.svg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+            }
+            
+            // Background Toggles
+            if (btn.title === 'Toggle Dark Background') {
+                btn.addEventListener('click', () => {
+                    const previewArea = document.querySelector('.bg-\\[url\\(.*?\\)\\]') || document.querySelector('.bg-[url(.*)]');
+                    if(previewArea) previewArea.style.backgroundColor = '#1a1b26';
+                });
+            }
+            if (btn.title === 'Toggle Light Background') {
+                btn.addEventListener('click', () => {
+                    const previewArea = document.querySelector('.bg-\\[url\\(.*?\\)\\]') || document.querySelector('.bg-[url(.*)]');
+                    if(previewArea) previewArea.style.backgroundColor = '#ffffff';
+                });
+            }
+        });
+        
+        // Input tag removing (for manually added ones)
+        const tagCloseBtns = document.querySelectorAll('.hover\\:text-error');
+        tagCloseBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const span = e.target.closest('span');
+                if(span) span.remove();
+            });
+        });
+    });
+</script>
+</body>
+</html>
