@@ -263,6 +263,9 @@ function App() {
   
   // Export Settings State
   const [showExportDialog, setShowExportDialog] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [saveTargetId, setSaveTargetId] = useState(null);
+  const [saveFileName, setSaveFileName] = useState('converted');
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [docTitle, setDocTitle] = useState("My SVG Artwork");
   const [docDesc, setDocDesc] = useState("Created with CAD Sketcher");
@@ -1115,7 +1118,27 @@ function App() {
 
   const buildArtworkSvg = (el) => buildArtworkPathSvg(el) || buildArtworkImageSvg(el);
 
-  const downloadArtworkSvg = (el) => {
+  const sanitizeSvgFileName = (raw, fallback = 'converted') => {
+    let name = String(raw || '').trim();
+    if (!name) name = fallback;
+    name = name.replace(/\.svg$/i, '').replace(/\.[^.\\/]+$/, '');
+    name = name.replace(/[<>:"/\\|?*\u0000-\u001f]+/g, '_').replace(/\s+/g, '_').replace(/_+/g, '_');
+    name = name.replace(/^[.\s_]+|[.\s_]+$/g, '');
+    return (name || fallback) + '.svg';
+  };
+
+  const openSaveDialog = (el) => {
+    if (!el) return;
+    const base = (el.fileName || convertStats?.name || docTitle || 'converted')
+      .replace(/\.svg$/i, '')
+      .replace(/\.[^.]+$/, '');
+    const suffix = el.hasEdits ? '_edited' : '';
+    setSaveTargetId(el.id);
+    setSaveFileName((base || 'converted') + suffix);
+    setShowSaveDialog(true);
+  };
+
+  const downloadArtworkSvg = (el, customName) => {
     // As-is clear CAD (image SVG) unless user edited vector nodes
     const svg = el.hasEdits
       ? buildArtworkPathSvg(el)
@@ -1128,12 +1151,29 @@ function App() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    const suffix = el.hasEdits ? '_edited' : '';
-    link.download = (el.fileName || 'converted').replace(/\.[^.]+$/, '') + suffix + '.svg';
+    const fallback = (el.fileName || 'converted').replace(/\.[^.]+$/, '') + (el.hasEdits ? '_edited' : '');
+    link.download = sanitizeSvgFileName(customName || fallback, 'converted');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+  };
+
+  const confirmSaveDownload = () => {
+    const art = elements.find((el) => el.id === saveTargetId)
+      || elements.find((el) => el.id === convertStats?.artworkId);
+    if (!art) {
+      alert('Nothing to download.');
+      setShowSaveDialog(false);
+      return;
+    }
+    const finalName = sanitizeSvgFileName(saveFileName, art.fileName || 'converted');
+    downloadArtworkSvg(art, finalName);
+    // Keep artwork fileName in sync with chosen name
+    setElements((prev) => prev.map((el) => (
+      el.id === art.id ? { ...el, fileName: finalName } : el
+    )));
+    setShowSaveDialog(false);
   };
 
   const copyJsx = () => {
@@ -2367,7 +2407,7 @@ function App() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => downloadArtworkSvg(art)}
+                      onClick={() => openSaveDialog(art)}
                       className="px-3 py-1.5 text-xs font-semibold rounded-lg text-brand-700 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-950/40 transition whitespace-nowrap"
                     >
                       Download SVG
@@ -2395,48 +2435,48 @@ function App() {
             </div>
 
             {/* Floating bottom HUD — zoom / fit / undo / active tool */}
-            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center bg-white/95 dark:bg-[#131929]/95 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-lg border border-slate-200/80 dark:border-slate-800 gap-3 text-xs z-30">
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center bg-white/95 dark:bg-[#131929]/95 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-lg border border-slate-200/80 dark:border-slate-800 gap-3 text-xs z-30 font-semibold">
               <label className="flex items-center gap-2 px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition relative overflow-hidden">
                 <span className="w-4 h-4 rounded-full ring-2 ring-white dark:ring-slate-800 shadow-sm" style={{ backgroundColor: color }}></span>
-                <span className="text-[11px] font-mono font-semibold text-slate-700 dark:text-slate-200 uppercase">{color}</span>
+                <span className="text-[11px] font-mono font-bold text-slate-800 dark:text-slate-100 uppercase">{color}</span>
                 <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="absolute opacity-0 cursor-pointer w-full h-full" />
               </label>
               <div className="h-4 w-px bg-slate-200 dark:bg-slate-800"></div>
               <div className="flex items-center gap-1">
-                <button type="button" onClick={() => setZoom(Math.max(0.1, zoom - 0.1))} className="p-1.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg" title="Zoom Out">
-                  <i className="ph ph-minus text-sm"></i>
+                <button type="button" onClick={() => setZoom(Math.max(0.1, zoom - 0.1))} className="p-1.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg" title="Zoom Out">
+                  <i className="ph-bold ph-minus text-sm"></i>
                 </button>
-                <span className="font-mono text-xs font-semibold w-12 text-center text-slate-700 dark:text-slate-200">{Math.round(zoom * 100)}%</span>
-                <button type="button" onClick={() => setZoom(Math.min(10, zoom + 0.1))} className="p-1.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg" title="Zoom In">
-                  <i className="ph ph-plus text-sm"></i>
+                <span className="font-mono text-xs font-bold w-12 text-center text-slate-800 dark:text-slate-100">{Math.round(zoom * 100)}%</span>
+                <button type="button" onClick={() => setZoom(Math.min(10, zoom + 0.1))} className="p-1.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg" title="Zoom In">
+                  <i className="ph-bold ph-plus text-sm"></i>
                 </button>
-                <button type="button" onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }} className="px-2.5 py-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg" title="Fit Screen">
+                <button type="button" onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }} className="px-2.5 py-1.5 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg" title="Fit Screen">
                   Fit
                 </button>
               </div>
               <div className="h-4 w-px bg-slate-200 dark:bg-slate-800"></div>
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-1">
                 <button
                   type="button"
                   onClick={handleUndo}
                   disabled={historyIndex === 0}
-                  className={`p-1.5 rounded-lg transition ${historyIndex === 0 ? 'text-slate-300 dark:text-slate-600' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition ${historyIndex === 0 ? 'text-slate-300 dark:text-slate-600' : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
                   title="Undo (Ctrl+Z)"
                 >
-                  <i className="ph ph-arrow-u-up-left text-base"></i>
+                  Undo
                 </button>
                 <button
                   type="button"
                   onClick={handleRedo}
                   disabled={historyIndex === history.length - 1}
-                  className={`p-1.5 rounded-lg transition ${historyIndex === history.length - 1 ? 'text-slate-300 dark:text-slate-600' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition ${historyIndex === history.length - 1 ? 'text-slate-300 dark:text-slate-600' : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
                   title="Redo (Ctrl+Y)"
                 >
-                  <i className="ph ph-arrow-u-up-right text-base"></i>
+                  Redo
                 </button>
               </div>
               <div className="h-4 w-px bg-slate-200 dark:bg-slate-800"></div>
-              <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 pr-0.5">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-300 pr-0.5">
                 <span className="w-2 h-2 rounded-full bg-brand-500"></span>
                 <span className="capitalize">{tool} tool</span>
               </div>
@@ -2689,7 +2729,7 @@ function App() {
                       type="button"
                       onClick={() => {
                         const art = elements.find(el => el.id === convertStats.artworkId);
-                        if (art) downloadArtworkSvg(art);
+                        if (art) openSaveDialog(art);
                       }}
                       className="w-full mt-1 py-2.5 bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 text-white text-xs font-bold rounded-lg shadow-md shadow-brand-500/25 transition"
                     >
@@ -2712,6 +2752,71 @@ function App() {
           </div>
         </aside>
       </div>
+
+      {showSaveDialog && (
+        <div
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[1000] flex items-center justify-center p-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowSaveDialog(false); }}
+        >
+          <div className="bg-white dark:bg-[#131929] p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-md border border-slate-200 dark:border-slate-800">
+            <h2 className="text-lg text-slate-900 dark:text-white mb-2 font-bold flex items-center gap-2">
+              <i className="ph-bold ph-download-simple text-brand-600"></i>
+              Save Clear SVG
+            </h2>
+            <p className="text-xs text-slate-500 mb-5">
+              Edit the file name, then save. File will download as <span className="font-semibold text-slate-700 dark:text-slate-300">.svg</span>
+            </p>
+
+            <label className="text-[11px] text-slate-500 uppercase tracking-wider mb-2 block font-semibold">
+              Image / file name
+            </label>
+            <div className="flex items-stretch gap-0 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden focus-within:ring-2 focus-within:ring-brand-500">
+              <input
+                type="text"
+                autoFocus
+                value={saveFileName}
+                onChange={(e) => setSaveFileName(e.target.value)}
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    confirmSaveDownload();
+                  }
+                  if (e.key === 'Escape') {
+                    e.preventDefault();
+                    setShowSaveDialog(false);
+                  }
+                }}
+                placeholder="my_drawing"
+                className="flex-1 min-w-0 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 px-3 py-3 outline-none text-sm font-medium"
+              />
+              <span className="shrink-0 px-3 py-3 bg-slate-100 dark:bg-slate-800 text-slate-500 text-sm font-semibold border-l border-slate-200 dark:border-slate-700">
+                .svg
+              </span>
+            </div>
+            <p className="mt-2 text-[11px] text-slate-400 truncate">
+              Saves as: <span className="text-slate-600 dark:text-slate-300 font-mono">{sanitizeSvgFileName(saveFileName)}</span>
+            </p>
+
+            <div className="flex justify-end gap-3 mt-6 pt-5 border-t border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setShowSaveDialog(false)}
+                className="px-4 py-2 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmSaveDownload}
+                className="px-5 py-2 rounded-lg bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:from-brand-500 hover:to-purple-500 transition-colors font-semibold text-sm shadow-md shadow-brand-500/25"
+              >
+                Save SVG
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showExportDialog && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[1000] flex items-center justify-center">
